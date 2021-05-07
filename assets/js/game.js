@@ -3,9 +3,10 @@ var playerHealth = 100;
 var playerAttack = 10;
 var playerMoney = 10;
 
-var enemyNames = ['Roborto', 'Amy Android', 'Robo Trumble'];
+var enemyNames = ['Belial', 'Azmodan', 'Diablo'];
 var enemyHealth = 50;
 var enemyAttack = 12;
+
 
 // fight function (now with parameter for enemy's name)
 var fight = function(enemyName) {
@@ -29,7 +30,7 @@ var fight = function(enemyName) {
     }
 
     // remove enemy's health by subtracting the amount set in the playerAttack variable
-    enemyHealth = enemyHealth - playerAttack;
+    enemyHealth = Math.max(0, enemyHealth - playerAttack);
     console.log(
       playerName + ' attacked ' + enemyName + '. ' + enemyName + ' now has ' + enemyHealth + ' health remaining.'
     );
@@ -39,7 +40,7 @@ var fight = function(enemyName) {
       window.alert(enemyName + ' has died!');
 
       // award player money for winning
-      playerMoney = playerMoney + 20;
+      playerMoney = Math.max(0, playerMoney - 10);
 
       // leave while() loop since enemy is dead
       break;
@@ -48,7 +49,7 @@ var fight = function(enemyName) {
     }
 
     // remove players's health by subtracting the amount set in the enemyAttack variable
-    playerHealth = playerHealth - enemyAttack;
+    playerHealth = Math.max(0, playerHealth - enemyAttack);
     console.log(
       enemyName + ' attacked ' + playerName + '. ' + playerName + ' now has ' + playerHealth + ' health remaining.'
     );
@@ -82,7 +83,7 @@ var startGame = function() {
       var pickedEnemyName = enemyNames[i];
 
       // reset enemyHealth before starting new fight
-      enemyHealth = 50;
+      enemyHealth = randomNumber();
 
       // pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemyName parameter
       fight(pickedEnemyName);
@@ -108,7 +109,11 @@ var startGame = function() {
   // after loop ends, we are either out of playerHealth or enemies to fight, so run the endGame function
   endGame();
 };
+var randomNumber = function() {
+  var value = Math.floor(Math.random() * 21) + 40;
 
+  return value;
+};
 // function to end the entire game
 var endGame = function() {
   window.alert("The game has now ended. Let's see how you did!");
